@@ -24,17 +24,19 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Notify Telegram Setup Message
-        run: echo "MESSAGE=$(${{ vars.BO_TELEGRAM_WORKFLOW_MESSAGE }})" >> $GITHUB_ENV
+        run: echo "MESSAGE=eval ${{ vars.BO_TELEGRAM_WORKFLOW_MESSAGE }}" >> $GITHUB_ENV
 
       - name: Notify Success Telegram
         run: |
-          curl -X POST "https://api.telegram.org/bot${{ vars.BO_TELEGRAM_BOT_TOKEN }}/sendMessage" \
-          -d "chat_id=${{ vars.BO_TELEGRAM_CHAT_ID }}" \
-          -d "text=✅ ${{ env.MESSAGE }}"
+          # curl -X POST "https://api.telegram.org/bot${{ vars.BO_TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          # -d "chat_id=${{ vars.BO_TELEGRAM_CHAT_ID }}" \
+          # -d "text=✅ ${{ env.MESSAGE }}"
+          echo "✅ ${{ env.MESSAGE }}"
 
       - name: Notify Failure Telegram
         if: failure()
         run: |
-          curl -X POST "https://api.telegram.org/bot${{ vars.BO_TELEGRAM_BOT_TOKEN }}/sendMessage" \
-          -d "chat_id=${{ vars.BO_TELEGRAM_CHAT_ID }}" \
-          -d "text=❌ ${{ env.MESSAGE }}"
+          # curl -X POST "https://api.telegram.org/bot${{ vars.BO_TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          # -d "chat_id=${{ vars.BO_TELEGRAM_CHAT_ID }}" \
+          # -d "text=❌ ${{ env.MESSAGE }}"
+          echo "❌ ${{ env.MESSAGE }}"
