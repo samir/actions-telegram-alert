@@ -28,7 +28,7 @@ jobs:
           MESSAGE: "TELEGRAM_MESSAGE"
           TELEGRAM_MESSAGE: "✅ ${{ vars.BO_TELEGRAM_WORKFLOW_MESSAGE }}"
         run: |
-          message="$(${ env[env.MESSAGE] })"
+          message="$(${{ env[env.MESSAGE] }})"
           echo $message
           curl -X POST "https://api.telegram.org/bot${{ vars.BO_TELEGRAM_BOT_TOKEN }}/sendMessage" \
           -d "chat_id=${{ vars.BO_TELEGRAM_CHAT_ID }}" \
@@ -40,7 +40,7 @@ jobs:
           MESSAGE: "TELEGRAM_MESSAGE"
           TELEGRAM_MESSAGE: "❌ ${{ vars.BO_TELEGRAM_WORKFLOW_MESSAGE }}"
         run: |
-          message=`$(${ env[env.MESSAGE] })`
+          message=`${{ env[env.MESSAGE] }}`
           echo $message
           curl -X POST "https://api.telegram.org/bot${{ vars.BO_TELEGRAM_BOT_TOKEN }}/sendMessage" \
           -d "chat_id=${{ vars.BO_TELEGRAM_CHAT_ID }}" \
