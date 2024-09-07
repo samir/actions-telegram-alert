@@ -25,20 +25,16 @@ jobs:
 
       - name: Notify Telegram Setup Message
         run: |
-          echo ${github.workflow} #${github.run_number}
-          echo ${github.server_url}/${github.repository}/actions/runs/${github.run_id}
-          echo Commit: ${github.sha}
-          echo Por: ${github.actor}
-
           mensagem=$(eval "echo ${{ vars.BO_TELEGRAM_WORKFLOW_MESSAGE }}")
           echo $mensagem
           echo "BO_TELEGRAM_MESSAGE=$mensagem" >> $GITHUB_ENV
+          echo ${{ env.BO_TELEGRAM_MESSAGE }}
 
-      - name: Notify Success Telegram
-        run: |
-          echo "execute curl with message '✅ ${{ env.BO_TELEGRAM_MESSAGE }}'"
+      # - name: Notify Success Telegram
+      #   run: |
+      #     echo "execute curl with message '✅ ${{ env.BO_TELEGRAM_MESSAGE }}'"
 
-      - name: Notify Failure Telegram
-        if: failure()
-        run: |
-          echo "execute curl with message '❌ ${{ env.BO_TELEGRAM_MESSAGE }}'"
+      # - name: Notify Failure Telegram
+      #   if: failure()
+      #   run: |
+      #     echo "execute curl with message '❌ ${{ env.BO_TELEGRAM_MESSAGE }}'"
