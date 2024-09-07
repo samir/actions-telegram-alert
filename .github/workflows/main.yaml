@@ -1,0 +1,43 @@
+# -d "text=❌ ${{ github.workflow }} #${{ github.run_number }}
+# ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+# Commit: ${{ github.sha }}
+# Por: ${{ github.actor }}"
+
+# -d "text=✅ ${{ github.workflow }} #${{ github.run_number }}
+# ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+# Commit: ${{ github.sha }}
+# Por: ${{ github.actor }}"
+
+name: Deploy MAIN
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  push-and-deploy:
+    runs-on: ubuntu-latest
+    name: Docker build and push to ECR
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Notify Success Telegram
+        env:
+          MESSAGE: "TELEGRAM_MESSAGE"
+          TELEGRAM_MESSAGE: ${{ vars.BO_TELEGRAM_WORKFLOW_MESSAGE }}
+        run: |
+          curl -X POST "https://api.telegram.org/bot${{ vars.BO_TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          -d "chat_id=${{ vars.BO_TELEGRAM_CHAT_ID }}" \
+          -d "text=${ env[$MESSAGE] }"
+
+      - name: Notify Failure Telegram
+        if: failure()
+        env:
+          MESSAGE: "TELEGRAM_MESSAGE"
+          TELEGRAM_MESSAGE: "❌ ${{ vars.BO_TELEGRAM_WORKFLOW_MESSAGE }}""
+        run: |
+          curl -X POST "https://api.telegram.org/bot${{ vars.BO_TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          -d "chat_id=${{ vars.BO_TELEGRAM_CHAT_ID }}" \
+          -d "text=${ env[$MESSAGE] }"
