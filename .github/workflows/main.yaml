@@ -25,8 +25,7 @@ jobs:
 
       - name: Notify Telegram Setup Message
         run: |
-          mensagem="${{ vars.BO_TELEGRAM_WORKFLOW_MESSAGE }}"
-          echo "BO_TELEGRAM_MESSAGE=$mensagem" >> $GITHUB_ENV
+          echo "BO_TELEGRAM_MESSAGE=${{ vars.BO_TELEGRAM_WORKFLOW_MESSAGE }}" >> $GITHUB_ENV
 
       - name: Notify Success Telegram
         run: |
