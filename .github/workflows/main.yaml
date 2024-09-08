@@ -26,15 +26,13 @@ jobs:
       - name: Notify Telegram Setup Message
         run: |
           mensagem="${{ vars.BO_TELEGRAM_WORKFLOW_MESSAGE }}"
-          echo $mensagem
           echo "BO_TELEGRAM_MESSAGE=$mensagem" >> $GITHUB_ENV
-          echo ${{ env.BO_TELEGRAM_MESSAGE }}
 
-      # - name: Notify Success Telegram
-      #   run: |
-      #     echo "execute curl with message '✅ ${{ env.BO_TELEGRAM_MESSAGE }}'"
+      - name: Notify Success Telegram
+        run: |
+          echo "execute curl with message '✅ ${{ env.BO_TELEGRAM_MESSAGE }}'"
 
-      # - name: Notify Failure Telegram
-      #   if: failure()
-      #   run: |
-      #     echo "execute curl with message '❌ ${{ env.BO_TELEGRAM_MESSAGE }}'"
+      - name: Notify Failure Telegram
+        if: failure()
+        run: |
+          echo "execute curl with message '❌ ${{ env.BO_TELEGRAM_MESSAGE }}'"
